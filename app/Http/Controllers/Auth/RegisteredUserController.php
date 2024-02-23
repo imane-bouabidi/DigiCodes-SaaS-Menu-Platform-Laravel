@@ -35,6 +35,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
+        $user = null;
         //1- validation inputs
         $request->validate([
             'name' => ['required', 'string', 'max:255'],

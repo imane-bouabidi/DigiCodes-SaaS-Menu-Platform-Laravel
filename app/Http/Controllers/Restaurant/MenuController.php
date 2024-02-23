@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +16,14 @@ class MenuController extends Controller
     public function index()
     {
         // Get the authenticated user's restaurant_id
-        $restaurantId = Auth::user()->restaurant_id;
+        $restaurant = Restaurant::where('user_id', Auth::user()->id)->first();
+        // $restaurantId = Auth::user()->restaurant_id;
 
         //2- Fetch menus associated with the authenticated user
-        $menus = Menu::where('restaurant_id', $restaurantId)->get();
-        // dd($menus);
+        $menus = Menu::where('restaurant_id', $restaurant->id)->get();
+        dd($menus);
         //3- send it to view
-        return view('restaurant.menus.index', compact('menus'));
+        // return view('restaurant.menus.index', compact('menus'));
     }
 
     public function create()
@@ -33,7 +35,7 @@ class MenuController extends Controller
 
 
     // Store a newly created menu in storage
-    public function store(Request $request)
+    public function store_menu(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -71,7 +73,7 @@ class MenuController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('menus.edit', compact('menu'));
+        return view('restaurant.menus.update');
     }
 
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Restaurant\MenuItemController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Restaurant\MenuController;
@@ -49,6 +50,7 @@ Route::get('/not-authorized', function () {
 
 
 
+
 // this route for non route
 
 
@@ -61,6 +63,17 @@ Route::middleware('auth')->group(function () {
 
 Route::fallback(fn () => 'not found page');
 
+
+//menu items
+
+Route::post('/menu_items', [MenuItemController::class, 'store_menu_item'])->name('menu_items.store');
+Route::get('menu_items/create', [MenuItemController::class, 'create'])->name('menu_items.create');
+
+//menu
+Route::get('menu.index', [MenuController::class, 'index'])->name('menu.index');
+Route::get('menu.create', [MenuController::class, 'create'])->name('menu.create');
+Route::get('menu.store', [MenuController::class, 'store_menu'])->name('menu.store');
+Route::get('menu.update', [MenuController::class, 'edit'])->name('menu.update');
 
 
 require __DIR__ . '/auth.php';
