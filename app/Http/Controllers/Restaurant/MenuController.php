@@ -48,7 +48,7 @@ class MenuController extends Controller
         $menu->user_id = Auth::id();
         $menu->save();
 
-        return redirect()->route('restaurant.menus.index')->with('success', 'Menu created successfully.');
+        return redirect()->route('menu.index')->with('success', 'Menu created successfully.');
     }
 
 
